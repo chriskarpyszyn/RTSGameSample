@@ -11,15 +11,23 @@ window.onload = function() {
     startGame();
 
     testUnit.reset();
+    canvas.addEventListener("click", function (evt) {
+        const moustPos = calculateMousePos(evt);
+        document.getElementById("debugText").innerHTML = "click";
+        testUnit.gotoX = moustPos.x;
+        testUnit.gotoY = moustPos.y;
+    });
 
     canvas.addEventListener("mousemove", function(evt) {
         const mousePos = calculateMousePos(evt);
-        document.getElementById("debugText").innerHTML = `x: ${mousePos.x}  y: ${mousePos.y}`;
+        //document.getElementById("debugText").innerHTML = `x: ${mousePos.x}  y: ${mousePos.y}`;
     });
+
+
 }
 
 function move() {
-    
+    testUnit.move();
 }
 
 function draw() {
