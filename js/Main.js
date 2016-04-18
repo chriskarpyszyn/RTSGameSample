@@ -2,9 +2,15 @@ const FPS = 30;
 var canvas;
 var canvasContext;
 
+var testUnit = new Unit();
+
 window.onload = function() {
     canvas = document.getElementById("gameCanvas");
     canvasContext = canvas.getContext("2d");
+
+    startGame();
+
+    testUnit.reset();
 
     canvas.addEventListener("mousemove", function(evt) {
         const mousePos = calculateMousePos(evt);
@@ -18,6 +24,7 @@ function move() {
 
 function draw() {
     colorRect(0, 0, canvas.width, canvas.height, "#000000"); //draw canvas
+    testUnit.draw();
 }
 
 function startGame() {
