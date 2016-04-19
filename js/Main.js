@@ -26,9 +26,7 @@ window.onload = function() {
     canvas.addEventListener("click", function (evt) {
         var moustPos = calculateMousePos(evt);
         for (var i = 0; i < playerUnits.length; i++) {
-            var eachUnit = playerUnits[i];
-            eachUnit.gotoX = moustPos.x;
-            eachUnit.gotoY = moustPos.y;
+            playerUnits[i].gotoNear(moustPos.x, moustPos.y);
         }
         //testUnit.gotoX = moustPos.x;
         //testUnit.gotoY = moustPos.y;

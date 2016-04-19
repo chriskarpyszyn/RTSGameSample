@@ -1,5 +1,6 @@
 const UNIT_PLACEHOLDER_RADIUS = 5;
 const UNIT_PIXELS_MOVE_RATE = 2;
+const UNIT_MAX_RAND_DIST_FROM_WALK_TARGET = 155;
 
 function Unit() {
    
@@ -45,6 +46,11 @@ function Unit() {
         //if (this.y > this.gotoY) {
         //    this.y -= UNIT_PIXELS_MOVE_RATE;
         //}
+    }
+
+    this.gotoNear = function(aroundX, aroundY) {
+        this.gotoX = aroundX + Math.random() * UNIT_MAX_RAND_DIST_FROM_WALK_TARGET;
+        this.gotoY = aroundY + Math.random() * UNIT_MAX_RAND_DIST_FROM_WALK_TARGET;
     }
 
     this.draw = function() {
