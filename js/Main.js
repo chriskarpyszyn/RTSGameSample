@@ -1,12 +1,20 @@
 const FPS = 30;
 var canvas;
 var canvasContext;
+const PLAYER_START_UNITS = 25;
+var playerUnits = [];
 
-var testUnit = new Unit();
+//var testUnit = new Unit();
 
 window.onload = function() {
     canvas = document.getElementById("gameCanvas");
     canvasContext = canvas.getContext("2d");
+
+    for (var i = 0; i < PLAYER_START_UNITS; i++) {
+        var spawnUnit = new Unit();
+        spawnUnit.reset();
+        playerUnits.push(spawnUnit);
+    }
 
     startGame();
 
@@ -17,20 +25,28 @@ window.onload = function() {
 
     canvas.addEventListener("click", function (evt) {
         var moustPos = calculateMousePos(evt);
-        testUnit.gotoX = moustPos.x;
-        testUnit.gotoY = moustPos.y;
+        for (var i = 0; i < playerUnits.length; i++) {
+            var eachUnit = playerUnits[i];
+            eachUnit.gotoX = moustPos.x;
+            eachUnit.gotoY = moustPos.y;
+        }
+        //testUnit.gotoX = moustPos.x;
+        //testUnit.gotoY = moustPos.y;
     });
 
-    testUnit.reset();
 }
 
 function move() {
-    testUnit.move();
+    for (var i = 0; i < playerUnits.length; i++) {
+        playerUnits[i].move();
+    }
 }
 
 function draw() {
     colorRect(0, 0, canvas.width, canvas.height, "#000000"); //draw canvas
-    testUnit.draw();
+    for (var i = 0; i < playerUnits.length; i++) {
+        playerUnits[i].draw();
+    }
 }
 
 function startGame() {
