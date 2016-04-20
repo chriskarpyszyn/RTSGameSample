@@ -17,3 +17,10 @@ function colorCircle(centerX, centerY, radius, fillColor) {
     canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
     canvasContext.fill();
 }
+
+function colorOutlineRectCornerToCorner(x1, y1, x2, y2, lineColor) {
+    canvasContext.strokeStyle = lineColor;
+    canvasContext.beginPath();
+    canvasContext.rect(x1, y1, x2 - x1, y2 - y1);
+    canvasContext.stroke();
+}
