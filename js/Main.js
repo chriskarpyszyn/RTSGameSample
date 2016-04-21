@@ -1,9 +1,14 @@
 const FPS = 30;
 const MIN_DIST_TO_DETECT_DRAG = 10;
+const MOUSE_BUTTON_RIGHT = 2;
 var canvas;
 var canvasContext;
+
 const PLAYER_START_UNITS = 35;
+const ENEMY_START_UNITS = 100;
 var playerUnits = [];
+var enemyUnits = [];
+
 var playerUnitsSelected = [];
 
 var lassoX1 = 0;
@@ -13,7 +18,7 @@ var lassoY2 = 0;
 
 var mouseDown = false;
 
-var MOUSE_BUTTON_RIGHT = 2;
+
 
 //var testUnit = new Unit();
 
@@ -23,8 +28,14 @@ window.onload = function() {
 
     for (var i = 0; i < PLAYER_START_UNITS; i++) {
         var spawnUnit = new Unit();
-        spawnUnit.reset();
+        spawnUnit.resetAndSetTeam(true);
         playerUnits.push(spawnUnit);
+    }
+
+    for (var i = 0; i < ENEMY_START_UNITS; i++) {
+        var spawnUnit = new Unit();
+        spawnUnit.resetAndSetTeam(false);
+        enemyUnits.push(spawnUnit);
     }
 
     startGame();
@@ -96,6 +107,10 @@ function move() {
     for (var i = 0; i < playerUnits.length; i++) {
         playerUnits[i].move();
     }
+
+    for (var i = 0; i < enemyUnits.length; i++) {
+        enemyUnits[i].move();
+    }
 }
 
 function draw() {
@@ -103,6 +118,10 @@ function draw() {
 
     for (var i = 0; i < playerUnits.length; i++) {
         playerUnits[i].draw();
+    }
+
+    for (var i = 0; i < enemyUnits.length; i++) {
+        enemyUnits[i].draw();
     }
     
     for (var i = 0; i < playerUnitsSelected.length; i++) {

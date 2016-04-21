@@ -4,13 +4,23 @@ const UNIT_PIXELS_MOVE_RATE = 2;
 const UNIT_RANKS_SPACING = 3 * UNIT_PLACEHOLDER_RADIUS;
 function Unit() {
 
-    this.reset = function() {
+    this.resetAndSetTeam = function (playerTeam) {
+
+        this.isPlayer = playerTeam;
+
         this.x = Math.random() * canvas.width / 4;
         this.y = Math.random() * canvas.height / 4;
 
+        if (this.isPlayer === false) {
+            this.x = canvas.width - this.x;
+            this.y = canvas.height - this.y;
+            this.unitColor = "#FF33FF";
+        } else {
+            this.unitColor = "#FFFFFF";
+        }
+
         this.gotoX = this.x;
         this.gotoY = this.y;
-
         this.isDead = false;
     }
 
@@ -57,8 +67,10 @@ function Unit() {
         this.gotoY = aroundY + rowNum * UNIT_RANKS_SPACING;
     }
 
-    this.draw = function() {
-        colorCircle(this.x, this.y, UNIT_PLACEHOLDER_RADIUS, "#FFFFFF");
+    this.draw = function () {
+        if (this.isDead === false) {
+            colorCircle(this.x, this.y, UNIT_PLACEHOLDER_RADIUS, this.unitColor);
+        }
     }
 
     this.drawSelectionBox = function() {
