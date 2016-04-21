@@ -30,7 +30,7 @@ window.onload = function() {
 
     canvas.addEventListener("mousemove", function(evt) {
         var mousePos = calculateMousePos(evt);
-        document.getElementById("debugText").innerHTML = `x: ${mousePos.x}  y: ${mousePos.y}`;
+        //document.getElementById("debugText").innerHTML = `x: ${mousePos.x}  y: ${mousePos.y}`;
 
         if (mouseDown === true) {
             lassoX2 = mousePos.x;
@@ -67,6 +67,15 @@ window.onload = function() {
     canvas.addEventListener("mouseup", function(evt) {
         if (evt.button === MOUSE_BUTTON_RIGHT) {
 
+            playerUnitsSelected = [];
+
+            for (var i = 0; i < playerUnits.length; i++) {
+                if (playerUnits[i].isInBox(lassoX1, lassoY1, lassoX2, lassoY2)) {
+                    playerUnitsSelected.push(playerUnits[i]);
+                }
+            }
+            document.getElementById("debugText").innerHTML = `Selected ${playerUnitsSelected.length} units`;
+
             //function to see units
             mouseDown = false;
         }
@@ -82,14 +91,18 @@ function move() {
 
 function draw() {
     colorRect(0, 0, canvas.width, canvas.height, "#000000"); //draw canvas
+
     for (var i = 0; i < playerUnits.length; i++) {
-
         playerUnits[i].draw();
+    }
+    
+    for (var i = 0; i < playerUnitsSelected.length; i++) {
+        playerUnitsSelected[i].drawSelectionBox();
+    }
 
-        if (mouseDown === true) {
-            colorOutlineRectCornerToCorner(lassoX1, lassoY1, lassoX2, lassoY2, "#3399ff");
-            //colorRect(lassoX1, lassoY1, lassoX2 - lassoX1, lassoY2 - lassoY1, "#003399");
-        }
+    if (mouseDown === true) {
+        colorOutlineRectCornerToCorner(lassoX1, lassoY1, lassoX2, lassoY2, "#3399ff");
+        //colorRect(lassoX1, lassoY1, lassoX2 - lassoX1, lassoY2 - lassoY1, "#003399");
     }
 }
 
