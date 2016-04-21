@@ -1,4 +1,5 @@
 const FPS = 30;
+const MIN_DIST_TO_DETECT_DRAG = 10;
 var canvas;
 var canvasContext;
 const PLAYER_START_UNITS = 25;
@@ -39,10 +40,7 @@ window.onload = function() {
     });
 
     canvas.addEventListener("click", function (evt) {
-        var moustPos = calculateMousePos(evt);
-        for (var i = 0; i < playerUnits.length; i++) {
-            playerUnits[i].gotoNear(moustPos.x, moustPos.y);
-        }
+
 
         //if mouse click right
         //check which units are in area selected.
@@ -53,45 +51,54 @@ window.onload = function() {
 
     canvas.addEventListener("mousedown", function(evt) {
         evt.preventDefault(); //doesnt work
-        if (evt.button === MOUSE_BUTTON_RIGHT) {
+        
             var mousePos = calculateMousePos(evt);
             lassoX1 = mousePos.x;
             lassoY1 = mousePos.y;
             lassoX2 = mousePos.x;
             lassoY2 = mousePos.y;
             mouseDown = true;
-           
-        }
     });
 
     canvas.addEventListener("mouseup", function(evt) {
-        if (evt.button === MOUSE_BUTTON_RIGHT) {
+            mouseDown = false;
 
-            playerUnitsSelected = [];
+            if (mouseMovedEnoughForDrag()) {
+                playerUnitsSelected = [];
 
-            //if (lassoX2 < lassoX1) {
-            //    var tempX = lassoX1;
-            //    lassoX1 = lassoX2;
-            //    lassoX2 = tempX;
-            //}
+                //if (lassoX2 < lassoX1) {
+                //    var tempX = lassoX1;
+                //    lassoX1 = lassoX2;
+                //    lassoX2 = tempX;
+                //}
 
-            //if (lassoY2 < lassoY1) {
-            //    var tempY = lassoY1;
-            //    lassoY1 = lassoY2;
-            //    lassoY2 = tempY;
-            //}
+                //if (lassoY2 < lassoY1) {
+                //    var tempY = lassoY1;
+                //    lassoY1 = lassoY2;
+                //    lassoY2 = tempY;
+                //}
 
-            for (var i = 0; i < playerUnits.length; i++) {
-                if (playerUnits[i].isInBox(lassoX1, lassoY1, lassoX2, lassoY2)) {
-                    playerUnitsSelected.push(playerUnits[i]);
+                for (var i = 0; i < playerUnits.length; i++) {
+                    if (playerUnits[i].isInBox(lassoX1, lassoY1, lassoX2, lassoY2)) {
+                        playerUnitsSelected.push(playerUnits[i]);
+                    }
+                }
+                document.getElementById("debugText").innerHTML = `Selected ${playerUnitsSelected.length} units`;
+            } else {
+                var moustPos = calculateMousePos(evt);
+                for (var i = 0; i < playerUnits.length; i++) {
+                    playerUnits[i].gotoNear(moustPos.x, moustPos.y);
                 }
             }
-            document.getElementById("debugText").innerHTML = `Selected ${playerUnitsSelected.length} units`;
-
-            //function to see units
-            mouseDown = false;
-        }
+        
     });
+
+    function mouseMovedEnoughForDrag() {
+        var deltaX = lassoX1 - lassoX2;
+        var deltaY = lassoY1 - lassoY2;
+        var dragDist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        return (dragDist > MIN_DIST_TO_DETECT_DRAG);
+    }
 
 }
 
