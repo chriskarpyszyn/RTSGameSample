@@ -1,8 +1,7 @@
 const UNIT_PLACEHOLDER_RADIUS = 5;
 const UNIT_SELECT_DIM_HALF = UNIT_PLACEHOLDER_RADIUS + 3;
 const UNIT_PIXELS_MOVE_RATE = 2;
-const UNIT_MAX_RAND_DIST_FROM_WALK_TARGET = 155;
-
+const UNIT_RANKS_SPACING = 3 * UNIT_PLACEHOLDER_RADIUS;
 function Unit() {
 
     this.reset = function() {
@@ -49,9 +48,13 @@ function Unit() {
         //}
     }
 
-    this.gotoNear = function(aroundX, aroundY) {
-        this.gotoX = aroundX + Math.random() * UNIT_MAX_RAND_DIST_FROM_WALK_TARGET;
-        this.gotoY = aroundY + Math.random() * UNIT_MAX_RAND_DIST_FROM_WALK_TARGET;
+    this.gotoNear = function (aroundX, aroundY, formationPos, formationDim) {
+
+        var colNum = formationPos % formationDim;
+        var rowNum = Math.floor(formationPos / formationDim);
+
+        this.gotoX = aroundX + colNum * UNIT_RANKS_SPACING;
+        this.gotoY = aroundY + rowNum * UNIT_RANKS_SPACING;
     }
 
     this.draw = function() {

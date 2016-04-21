@@ -2,7 +2,7 @@ const FPS = 30;
 const MIN_DIST_TO_DETECT_DRAG = 10;
 var canvas;
 var canvasContext;
-const PLAYER_START_UNITS = 25;
+const PLAYER_START_UNITS = 35;
 var playerUnits = [];
 var playerUnitsSelected = [];
 
@@ -74,9 +74,11 @@ window.onload = function() {
             document.getElementById("debugText").innerHTML = `Selected ${playerUnitsSelected.length} units`;
         } else {
             var moustPos = calculateMousePos(evt);
+            var unitsAlongSide = Math.floor(Math.sqrt(playerUnitsSelected.length + 2));
             for (var i = 0; i < playerUnitsSelected.length; i++) {
-                playerUnitsSelected[i].gotoNear(moustPos.x, moustPos.y);
+                playerUnitsSelected[i].gotoNear(moustPos.x, moustPos.y, i, unitsAlongSide);
             }
+            document.getElementById("debugText").innerHTML = `Moving to ${moustPos.x}, ${moustPos.y}`;
         }
 
     });
