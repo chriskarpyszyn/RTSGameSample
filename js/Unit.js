@@ -64,19 +64,9 @@ function Unit() {
     }
 
     this.isInBox = function(leftX, topY, rightX, bottomY) {
-        if (this.x < leftX) {
-            return false;
-        }
-        if (this.y < topY) {
-            return false;
-        }
-        if (this.x > rightX) {
-            return false;
-        }
-        if (this.y > bottomY) {
-            return false;
-        }
-        return true;
+
+        return ((this.x - leftX) * (this.x - rightX) < 0 && (this.y - topY) * (this.y - bottomY) < 0);
+
     }
 }
 
