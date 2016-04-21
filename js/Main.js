@@ -63,34 +63,22 @@ window.onload = function() {
     canvas.addEventListener("mouseup", function(evt) {
             mouseDown = false;
 
-            if (mouseMovedEnoughForDrag()) {
-                playerUnitsSelected = [];
+        if (mouseMovedEnoughForDrag()) {
+            playerUnitsSelected = [];
 
-                //if (lassoX2 < lassoX1) {
-                //    var tempX = lassoX1;
-                //    lassoX1 = lassoX2;
-                //    lassoX2 = tempX;
-                //}
-
-                //if (lassoY2 < lassoY1) {
-                //    var tempY = lassoY1;
-                //    lassoY1 = lassoY2;
-                //    lassoY2 = tempY;
-                //}
-
-                for (var i = 0; i < playerUnits.length; i++) {
-                    if (playerUnits[i].isInBox(lassoX1, lassoY1, lassoX2, lassoY2)) {
-                        playerUnitsSelected.push(playerUnits[i]);
-                    }
-                }
-                document.getElementById("debugText").innerHTML = `Selected ${playerUnitsSelected.length} units`;
-            } else {
-                var moustPos = calculateMousePos(evt);
-                for (var i = 0; i < playerUnits.length; i++) {
-                    playerUnits[i].gotoNear(moustPos.x, moustPos.y);
+            for (var i = 0; i < playerUnits.length; i++) {
+                if (playerUnits[i].isInBox(lassoX1, lassoY1, lassoX2, lassoY2)) {
+                    playerUnitsSelected.push(playerUnits[i]);
                 }
             }
-        
+            document.getElementById("debugText").innerHTML = `Selected ${playerUnitsSelected.length} units`;
+        } else {
+            var moustPos = calculateMousePos(evt);
+            for (var i = 0; i < playerUnitsSelected.length; i++) {
+                playerUnitsSelected[i].gotoNear(moustPos.x, moustPos.y);
+            }
+        }
+
     });
 
     function mouseMovedEnoughForDrag() {
