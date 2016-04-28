@@ -1,6 +1,6 @@
 const FPS = 30;
 const MIN_DIST_TO_DETECT_DRAG = 10;
-const MIN_DIST_FOR_MOUSE_CLICK_SELECTABLE = 5;
+const MIN_DIST_FOR_MOUSE_CLICK_SELECTABLE = 10;
 const MOUSE_BUTTON_RIGHT = 2;
 var canvas;
 var canvasContext;
@@ -85,20 +85,42 @@ window.onload = function() {
             }
             document.getElementById("debugText").innerHTML = `Selected ${playerUnitsSelected.length} units`;
         } else {
-            var moustPos = calculateMousePos(evt);
-            var unitsAlongSide = Math.floor(Math.sqrt(playerUnitsSelected.length + 2));
-            for (var i = 0; i < playerUnitsSelected.length; i++) {
-                playerUnitsSelected[i].gotoNear(moustPos.x, moustPos.y, i, unitsAlongSide);
+            var mousePos = calculateMousePos(evt);
+            var clickedUnit = getUnitUnderMouse(mousePos);
+            if (clickedUnit !== null && clickedUnit.isPlayer === false) {
+                document.getElementById("debugText").innerHTML =
+                    `Player commands ${playerUnitsSelected.length} units to attack`;
+            } else {
+                var unitsAlongSide = Math.floor(Math.sqrt(playerUnitsSelected.length + 2));
+                for (var i = 0; i < playerUnitsSelected.length; i++) {
+                    playerUnitsSelected[i].gotoNear(mousePos.x, mousePos.y, i, unitsAlongSide);
+                }
+                document.getElementById("debugText").innerHTML =
+                    `Moving to ${mousePos.x}, ${mousePos.y}`;
             }
-            document.getElementById("debugText").innerHTML = `Moving to ${moustPos.x}, ${moustPos.y}`;
         }
 
     });
 
-    function getUnitWhereClicked(x,y) {
+    function getUnitUnderMouse(currentMousePos) {
+        var closestUnit = null;
+        var closestDistanceFoundToMouse = MIN_DIST_FOR_MOUSE_CLICK_SELECTABLE
+
+        for (var i = 0; i < playerUnits.length; i++) {
+            var playerDist = playerUnits[i].distanceFrom(currentMousePos.x, currentMousePos.y);
+            if (playerDist < closestDistanceFoundToMouse) {
+                closestUnit = playerUnits[i];
+                closestDistanceFoundToMouse = playerDist;
+            }
+        }
         for (var i = 0; i < enemyUnits.length; i++) {
-            
-        }        
+            var enemyDist = enemyUnits[i].distanceFrom(currentMousePos.x, currentMousePos.y);
+            if (enemyDist < closestDistanceFoundToMouse) {
+                closestUnit = enemyUnits[i];
+                closestDistanceFoundToMouse = enemyDist;
+            }
+        }
+        return closestUnit;
     }
 
     function mouseMovedEnoughForDrag() {
