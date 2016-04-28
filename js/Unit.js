@@ -83,6 +83,12 @@ function Unit() {
         return ((this.x - leftX) * (this.x - rightX) < 0 && (this.y - topY) * (this.y - bottomY) < 0);
 
     }
+
+    this.distanceFrom = function(otherX, otherY) {
+        var deltaX = otherX - this.x;
+        var deltaY = otherY - this.y;
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
 }
 
 

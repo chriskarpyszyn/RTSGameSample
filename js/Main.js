@@ -1,5 +1,6 @@
 const FPS = 30;
 const MIN_DIST_TO_DETECT_DRAG = 10;
+const MIN_DIST_FOR_MOUSE_CLICK_SELECTABLE = 5;
 const MOUSE_BUTTON_RIGHT = 2;
 var canvas;
 var canvasContext;
@@ -93,6 +94,12 @@ window.onload = function() {
         }
 
     });
+
+    function getUnitWhereClicked(x,y) {
+        for (var i = 0; i < enemyUnits.length; i++) {
+            
+        }        
+    }
 
     function mouseMovedEnoughForDrag() {
         var deltaX = lassoX1 - lassoX2;
