@@ -2,26 +2,13 @@ const FPS = 30;
 var canvas;
 var canvasContext;
 
-const PLAYER_START_UNITS = 35;
-const ENEMY_START_UNITS = 100;
-var playerUnits = [];
-var enemyUnits = [];
 
 window.onload = function() {
     canvas = document.getElementById("gameCanvas");
     canvasContext = canvas.getContext("2d");
 
-    for (var i = 0; i < PLAYER_START_UNITS; i++) {
-        var spawnUnit = new Unit();
-        spawnUnit.resetAndSetTeam(true);
-        playerUnits.push(spawnUnit);
-    }
-
-    for (var i = 0; i < ENEMY_START_UNITS; i++) {
-        var spawnUnit = new Unit();
-        spawnUnit.resetAndSetTeam(false);
-        enemyUnits.push(spawnUnit);
-    }
+    populateTeam(playerUnits, PLAYER_START_UNITS, true);
+    populateTeam(enemyUnits, ENEMY_START_UNITS, false);
 
     startGame();
 
@@ -31,24 +18,16 @@ window.onload = function() {
 }
 
 function move() {
-    for (var i = 0; i < playerUnits.length; i++) {
-        playerUnits[i].move();
-    }
-
-    for (var i = 0; i < enemyUnits.length; i++) {
-        enemyUnits[i].move();
+    for (var i = 0; i < allUnits.length; i++) {
+        allUnits[i].move();
     }
 }
 
 function draw() {
     colorRect(0, 0, canvas.width, canvas.height, "#000000"); //draw canvas
 
-    for (var i = 0; i < playerUnits.length; i++) {
-        playerUnits[i].draw();
-    }
-
-    for (var i = 0; i < enemyUnits.length; i++) {
-        enemyUnits[i].draw();
+    for (var i = 0; i < allUnits.length; i++) {
+        allUnits[i].draw();
     }
     
     for (var i = 0; i < playerUnitsSelected.length; i++) {
@@ -67,4 +46,5 @@ function startGame() {
         draw();
     }, 1000 / FPS);
 }
+
 

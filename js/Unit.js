@@ -3,6 +3,7 @@ const UNIT_SELECT_DIM_HALF = UNIT_PLACEHOLDER_RADIUS + 3;
 const UNIT_PIXELS_MOVE_RATE = 2;
 const UNIT_RANKS_SPACING = 3 * UNIT_PLACEHOLDER_RADIUS;
 const UNIT_ATTACK_RANGE = 55;
+const ENEMY_ATTACK_RANGE = UNIT_ATTACK_RANGE + 15;
 
 function Unit() {
 
@@ -45,8 +46,14 @@ function Unit() {
             }
         } else if (this.isPlayer === false) {
             if (Math.random() < 0.01) {
-                this.gotoX = this.x - Math.random() * 10;
-                this.gotoY = this.y - Math.random() * 10;
+
+                var nearestOpponentFound = findClosestUnitInRange(this.x, this.y, ENEMY_ATTACK_RANGE, playerUnits);
+                if (nearestOpponentFound !== null) {
+                    this.myTarget = nearestOpponentFound;
+                } else {
+                    this.gotoX = this.x - Math.random() * 10;
+                    this.gotoY = this.y - Math.random() * 10;
+                }
             }
         }
 
