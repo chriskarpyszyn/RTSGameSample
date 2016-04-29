@@ -50,6 +50,9 @@ function mouseupHandler(evt) {
         if (clickedUnit !== null && clickedUnit.isPlayer === false) {
             document.getElementById("debugText").innerHTML =
                 `Player commands ${playerUnitsSelected.length} units to attack`;
+            for (var i = 0; i < playerUnitsSelected.length; i++) {
+                playerUnitsSelected[i].setTarget(clickedUnit);
+            }
         } else {
             var unitsAlongSide = Math.floor(Math.sqrt(playerUnitsSelected.length + 2));
             for (var i = 0; i < playerUnitsSelected.length; i++) {

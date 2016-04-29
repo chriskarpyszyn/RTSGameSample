@@ -2,6 +2,8 @@ const UNIT_PLACEHOLDER_RADIUS = 5;
 const UNIT_SELECT_DIM_HALF = UNIT_PLACEHOLDER_RADIUS + 3;
 const UNIT_PIXELS_MOVE_RATE = 2;
 const UNIT_RANKS_SPACING = 3 * UNIT_PLACEHOLDER_RADIUS;
+const UNIT_ATTACK_RANGE = 55;
+
 function Unit() {
 
     this.resetAndSetTeam = function (playerTeam) {
@@ -22,9 +24,28 @@ function Unit() {
         this.gotoX = this.x;
         this.gotoY = this.y;
         this.isDead = false;
+        this.myTarget = null;
     }
 
-    this.move = function() {
+
+    this.move = function () {
+
+        if (this.myTarget !== null) {
+            if (this.myTarget.isDead) {
+                this.myTarget = null;
+                this.gotoX = this.x;
+                this.gotoY = this.y;
+            }
+            else if (this.distanceFrom(this.myTarget.x, this.myTarget.y) > UNIT_ATTACK_RANGE) {
+                this.gotoX = this.myTarget.x;
+                this.gotoY = this.myTarget.y;
+            } else {
+                this.myTarget.isDead = true; //makes invisible but does not remove from array
+                this.gotox = this.x;
+                this.gotoY = this.y;
+            }
+        }
+    
 
         var deltaX = this.gotoX - this.x;
         var deltaY = this.gotoY - this.y;
@@ -56,6 +77,10 @@ function Unit() {
         //if (this.y > this.gotoY) {
         //    this.y -= UNIT_PIXELS_MOVE_RATE;
         //}
+    }
+
+    this.setTarget = function (newTarget) {
+        this.myTarget = newTarget;
     }
 
     this.gotoNear = function (aroundX, aroundY, formationPos, formationDim) {
