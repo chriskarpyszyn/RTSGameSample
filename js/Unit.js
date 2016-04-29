@@ -35,8 +35,7 @@ function Unit() {
                 this.myTarget = null;
                 this.gotoX = this.x;
                 this.gotoY = this.y;
-            }
-            else if (this.distanceFrom(this.myTarget.x, this.myTarget.y) > UNIT_ATTACK_RANGE) {
+            } else if (this.distanceFrom(this.myTarget.x, this.myTarget.y) > UNIT_ATTACK_RANGE) {
                 this.gotoX = this.myTarget.x;
                 this.gotoY = this.myTarget.y;
             } else {
@@ -44,8 +43,13 @@ function Unit() {
                 this.gotox = this.x;
                 this.gotoY = this.y;
             }
+        } else if (this.isPlayer === false) {
+            if (Math.random() < 0.01) {
+                this.gotoX = this.x - Math.random() * 10;
+                this.gotoY = this.y - Math.random() * 10;
+            }
         }
-    
+
 
         var deltaX = this.gotoX - this.x;
         var deltaY = this.gotoY - this.y;
