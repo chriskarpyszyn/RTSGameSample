@@ -106,6 +106,8 @@ function Unit() {
     this.draw = function () {
         if (this.isDead === false) {
             colorCircle(this.x, this.y, UNIT_PLACEHOLDER_RADIUS, this.unitColor);
+        } else {
+            colorCircle(this.x, this.y, UNIT_PLACEHOLDER_RADIUS, 'yellow'); //verify that dead units are removed and not just disapearing
         }
     }
 
@@ -126,5 +128,3 @@ function Unit() {
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 }
-
-

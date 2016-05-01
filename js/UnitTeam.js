@@ -17,6 +17,21 @@ function populateTeam(whichTeam, howMany, isPlayerControlled) {
     }
 }
 
+function removeDeadUnitFromList(fromArray) {
+    for (var i = fromArray.length-1; i >= 0; i--) {
+        if (fromArray[i].isDead) {
+            fromArray.splice(i, 1);
+        }
+    }
+}
+
+function removeDeadUnits() {
+    removeDeadUnitFromList(allUnits);
+    removeDeadUnitFromList(playerUnits);
+    removeDeadUnitFromList(enemyUnits);
+    removeDeadUnitFromList(playerUnitsSelected);
+}
+
 function findClosestUnitInRange(fromX, fromY, maxRange, inUnitList) {
     var nearestUnitDist = maxRange;
     var nearestUnitFound = null;
