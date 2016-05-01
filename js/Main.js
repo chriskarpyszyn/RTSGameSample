@@ -42,7 +42,6 @@ function draw() {
 
     if (mouseDown === true) {
         colorOutlineRectCornerToCorner(lassoX1, lassoY1, lassoX2, lassoY2, "#3399ff");
-        //colorRect(lassoX1, lassoY1, lassoX2 - lassoX1, lassoY2 - lassoY1, "#003399");
     }
 }
 

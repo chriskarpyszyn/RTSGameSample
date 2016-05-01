@@ -63,11 +63,8 @@ function Unit() {
 
         var deltaX = this.gotoX - this.x;
         var deltaY = this.gotoY - this.y;
-        //var moveAngle = Math.atan2(deltaY, deltaX);
         var distToGo = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-        //var moveX = UNIT_PIXELS_MOVE_RATE * Math.cos(moveAngle);
-        //var moveY = UNIT_PIXELS_MOVE_RATE * Math.sin(moveAngle);
         var moveX = UNIT_PIXELS_MOVE_RATE * deltaX / distToGo;
         var moveY = UNIT_PIXELS_MOVE_RATE * deltaY / distToGo;
 
@@ -79,18 +76,6 @@ function Unit() {
             this.y = this.gotoY;
         }
 
-        //if (this.x < this.gotoX) {
-        //    this.x += UNIT_PIXELS_MOVE_RATE;
-        //}
-        //if (this.x > this.gotoX) {
-        //    this.x -= UNIT_PIXELS_MOVE_RATE;
-        //}
-        //if (this.y < this.gotoY) {
-        //    this.y += UNIT_PIXELS_MOVE_RATE;
-        //}
-        //if (this.y > this.gotoY) {
-        //    this.y -= UNIT_PIXELS_MOVE_RATE;
-        //}
     }
 
     this.setTarget = function (newTarget) {
@@ -124,9 +109,7 @@ function Unit() {
     this.draw = function () {
         if (this.isDead === false) {
             colorCircle(this.x, this.y, UNIT_PLACEHOLDER_RADIUS, this.unitColor);
-        } else {
-            colorCircle(this.x, this.y, UNIT_PLACEHOLDER_RADIUS, 'yellow'); //verify that dead units are removed and not just disapearing
-        }
+        } 
     }
 
     this.drawSelectionBox = function() {
