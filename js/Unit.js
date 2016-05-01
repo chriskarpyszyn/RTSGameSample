@@ -4,6 +4,7 @@ const UNIT_PIXELS_MOVE_RATE = 2;
 const UNIT_RANKS_SPACING = 3 * UNIT_PLACEHOLDER_RADIUS;
 const UNIT_ATTACK_RANGE = 55;
 const ENEMY_ATTACK_RANGE = UNIT_ATTACK_RANGE + 15;
+const UNIT_PLAYABLE_AREA_MARGIN = 20;
 
 function Unit() {
 
@@ -58,6 +59,7 @@ function Unit() {
             }
         }
 
+        this.keepUnitInPlayableArea();
 
         var deltaX = this.gotoX - this.x;
         var deltaY = this.gotoY - this.y;
@@ -102,6 +104,21 @@ function Unit() {
 
         this.gotoX = aroundX + colNum * UNIT_RANKS_SPACING;
         this.gotoY = aroundY + rowNum * UNIT_RANKS_SPACING;
+    }
+
+    this.keepUnitInPlayableArea = function() {
+        if (this.gotoX < UNIT_PLAYABLE_AREA_MARGIN) {
+            this.gotoX = UNIT_PLAYABLE_AREA_MARGIN;
+        } else if (this.gotoX > canvas.width - UNIT_PLAYABLE_AREA_MARGIN) {
+            this.gotoX = canvas.width - UNIT_PLAYABLE_AREA_MARGIN;
+        }
+
+        if (this.gotoY < UNIT_PLAYABLE_AREA_MARGIN) {
+            this.gotoY = UNIT_PLAYABLE_AREA_MARGIN;
+        }
+        else if (this.gotoY > canvas.height - UNIT_PLAYABLE_AREA_MARGIN) {
+            this.gotoY = canvas.height - UNIT_PLAYABLE_AREA_MARGIN;
+        }
     }
 
     this.draw = function () {
