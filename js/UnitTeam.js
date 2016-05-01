@@ -51,3 +51,13 @@ function findClosestUnitInRange(fromX, fromY, maxRange, inUnitList) {
     }
     return nearestUnitFound;
 }
+
+function checkWinningState() {
+    if (playerUnits.length === 0 && enemyUnits.length === 0) { //can this even happen?
+        document.getElementById("debugText").innerHTML = "Draw";
+    } else if (playerUnits.length === 0) {
+        document.getElementById("debugText").innerHTML = "Computer wins";
+    } else if (enemyUnits.length === 0) {
+        document.getElementById("debugText").innerHTML = "Player wins";
+    }
+}

@@ -25,6 +25,7 @@ function move() {
     if (deadUnitFlag) {
         removeDeadUnits();
         setDeadUnitFlag(false);
+        checkWinningState();
     }
 }
 
