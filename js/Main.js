@@ -22,7 +22,10 @@ function move() {
         allUnits[i].move();
     }
 
-    removeDeadUnits();
+    if (deadUnitFlag) {
+        removeDeadUnits();
+        setDeadUnitFlag(false);
+    }
 }
 
 function draw() {

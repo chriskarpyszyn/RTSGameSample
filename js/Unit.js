@@ -40,7 +40,8 @@ function Unit() {
                 this.gotoX = this.myTarget.x;
                 this.gotoY = this.myTarget.y;
             } else {
-                this.myTarget.isDead = true; //makes invisible but does not remove from array
+                this.myTarget.isDead = true;
+                setDeadUnitFlag(true);
                 this.gotox = this.x;
                 this.gotoY = this.y;
             }

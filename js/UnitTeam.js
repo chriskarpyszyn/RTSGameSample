@@ -4,9 +4,15 @@ var allUnits = [];
 var playerUnits = [];
 var enemyUnits = [];
 
+var deadUnitFlag = false;
+
 function addNewUnitToTeam(spawnedUnit, whichUnit) {
     whichUnit.push(spawnedUnit);
     allUnits.push(spawnedUnit);
+}
+
+function setDeadUnitFlag(bool) {
+    deadUnitFlag = bool;
 }
 
 function populateTeam(whichTeam, howMany, isPlayerControlled) {
